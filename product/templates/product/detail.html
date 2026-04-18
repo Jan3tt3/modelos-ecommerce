@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ product.name }}</h2>
+
+<p>{{ product.description }}</p>
+<p>Precio: ${{ product.price }}</p>
+
+<a href="/products/">Volver</a>
+
+<br><br>
+
+<a href="{% url 'product_delete' product.id %}">Eliminar producto</a>
+
+{% endblock %}
