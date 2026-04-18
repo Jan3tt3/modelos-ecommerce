@@ -1,0 +1,27 @@
+{% if user.is_authenticated %}
+    Bienvenido {{ user.username }} |
+    <a href="/accounts/logout/">Cerrar sesión</a>
+{% else %}
+    <a href="/accounts/login/">Login</a>
+{% endif %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-commerce</title>
+</head>
+<body>
+
+    <h1>Mi tienda 🛒</h1>
+
+    <nav>
+        <a href="/products/">Productos</a> |
+        <a href="/cart/">Carrito</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>

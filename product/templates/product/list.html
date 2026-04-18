@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Productos</h2>
+
+<ul>
+{% for product in products %}
+    <li>
+        {{ product.name }} - ${{ product.price }}
+        <a href="/cart/add/{{ product.id }}/">Agregar</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

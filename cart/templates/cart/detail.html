@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Carrito</h2>
+
+<ul>
+{% for product in cart.products.all %}
+    <li>
+        {{ product.name }} - ${{ product.price }}
+        <a href="/cart/remove/{{ product.id }}/">Eliminar</a>
+    </li>
+{% endfor %}
+</ul>
+
+<a href="/orders/create/">Finalizar compra</a>
+
+{% endblock %}
