@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from cart.models import Cart
 from order_manager.models import Order
 
@@ -26,6 +28,38 @@ def create_order(request):
     return redirect(order.get_absolute_url())
 
 
-def order_detail(request, id):
-    order = get_object_or_404(Order, id=id)
-    return render(request, 'order/detail.html', {'order': order})
+# 
+class OrderDetailView(LoginRequiredMixin, DetailView):
+    model = Order
+    template_name = 'order/detail.html'
+    context_object_name = 'order'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['mensaje'] = "Detalle de la orden"
+        return context
+
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from order_manager.models import Order
+
+
+class OrderListView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'order/list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        orders = self.get_queryset()
+
+        context['recent_orders'] = orders.order_by('-created_at')[:5]
+        context['paid_orders'] = orders.filter(status='completed')
+        context['pending_orders'] = orders.filter(status='pending')
+        context['cancelled_orders'] = orders.filter(status='cancelled')
+
+        return context

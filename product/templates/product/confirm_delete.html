@@ -1,0 +1,8 @@
+<h2>¿Eliminar {{ object.name }}?</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+</form>
+
+<a href="/products/">Cancelar</a>

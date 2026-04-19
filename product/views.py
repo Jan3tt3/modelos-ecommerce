@@ -1,23 +1,31 @@
-
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product
 
 
-@login_required
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    return render(request, 'product/detail.html', {'product': product})
+# LISTAR productos
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product/list.html'
+    context_object_name = 'products'
 
 
-@login_required
-def product_delete(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    product.delete()
-    return HttpResponseRedirect(reverse('product_list'))
+# DETALLE de producto
+class ProductDetailView(LoginRequiredMixin, DetailView):
+    model = Product
+    template_name = 'product/detail.html'
+    context_object_name = 'product'
 
-def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'product/list.html', {'products': products})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['mensaje'] = "Detalle del producto"
+        return context
+
+
+# ELIMINAR producto
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+    model = Product
+    template_name = 'product/confirm_delete.html'
+    success_url = reverse_lazy('product_list')
+
