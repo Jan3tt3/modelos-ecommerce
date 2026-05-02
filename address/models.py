@@ -1,8 +1,9 @@
 from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)

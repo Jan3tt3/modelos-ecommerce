@@ -1,9 +1,14 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cart.models import Cart
 from order_manager.models import Order
+from django.http import JsonResponse
+from django.views import View
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
+from .models import Order
 
 
 @login_required
@@ -63,3 +68,38 @@ class OrderListView(LoginRequiredMixin, ListView):
         context['cancelled_orders'] = orders.filter(status='cancelled')
 
         return context
+
+
+class SalesChartView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        sales = (
+            Order.objects
+            .filter(status='completed')
+            .annotate(month=TruncMonth('created_at'))
+            .values('month')
+            .annotate(total_sales=Sum('total'))
+            .order_by('month')
+        )
+
+        labels = []
+        data = []
+
+        for sale in sales:
+
+            labels.append(
+                sale['month'].strftime('%B')
+            )
+
+            data.append(
+                float(sale['total_sales'])
+            )
+
+        return JsonResponse({
+            'labels': labels,
+            'data': data
+        })
+    
+def sales_dashboard(request):
+    return render(request, 'order_manager/chart.html')

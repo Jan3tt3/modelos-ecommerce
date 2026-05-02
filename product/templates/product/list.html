@@ -8,7 +8,13 @@
 {% for product in products %}
     <li>
         {{ product.name }} - ${{ product.price }}
-        <a href="/cart/add/{{ product.id }}/">Agregar</a>
+
+        <!-- ✅ FORMULARIO CORRECTO -->
+        <form method="post" action="{% url 'add_to_cart' product.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Agregar</button>
+        </form>
+
     </li>
 {% endfor %}
 </ul>

@@ -7,6 +7,14 @@
 <p>{{ product.description }}</p>
 <p>Precio: ${{ product.price }}</p>
 
+<!--  FORMULARIO AGREGAR AL CARRITO -->
+<form method="post" action="{% url 'add_to_cart' product.id %}">
+    {% csrf_token %}
+    <button type="submit">Agregar al carrito</button>
+</form>
+
+<br>
+
 <a href="/products/">Volver</a>
 
 <br><br>
@@ -14,4 +22,5 @@
 <a href="{% url 'product_delete' product.id %}">Eliminar producto</a>
 
 <p>{{ mensaje }}</p>
+
 {% endblock %}

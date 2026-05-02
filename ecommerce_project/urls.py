@@ -18,11 +18,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from order_manager.views import SalesChartView, sales_dashboard
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('products/', include('product.urls')), 
-    path('cart/', include('cart.urls')),
+   path('products/', include('product.urls')),  
+    path('cart/', include('cart.urls')),         
     path('orders/', include('order_manager.urls')),
-    path('accounts/', include('django.contrib.auth.urls')), 
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('addresses/', include('address.urls')), 
+    path('sales-chart/',SalesChartView.as_view(),name='sales-chart'),
+    path('sales-dashboard/',sales_dashboard,name='sales-dashboard'),
 ]
 

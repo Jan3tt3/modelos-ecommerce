@@ -1,18 +1,16 @@
-{% extends 'base.html' %}
+<h2>Mi carrito</h2>
 
-{% block content %}
-
-<h2>Carrito</h2>
-
-<ul>
-{% for product in cart.products.all %}
-    <li>
+{% if cart.products.all %}
+  <ul>
+    {% for product in cart.products.all %}
+      <li>
         {{ product.name }} - ${{ product.price }}
-        <a href="/cart/remove/{{ product.id }}/">Eliminar</a>
-    </li>
-{% endfor %}
-</ul>
+        <a href="{% url 'remove_from_cart' product.id %}">Quitar</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Tu carrito está vacío</p>
+{% endif %}
 
-<a href="/orders/create/">Finalizar compra</a>
-
-{% endblock %}
+<a href="/products/">Seguir comprando</a>
