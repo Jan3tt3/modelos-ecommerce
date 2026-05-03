@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'cart',
     'product',
     'forms_test',
+    'api.apps.ApiConfig',
+    'rest_framework',
     
 ]
 

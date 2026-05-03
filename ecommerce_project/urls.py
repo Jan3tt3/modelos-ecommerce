@@ -30,5 +30,6 @@ urlpatterns = [
     path('sales-chart/',SalesChartView.as_view(),name='sales-chart'),
     path('sales-dashboard/',sales_dashboard,name='sales-dashboard'),
     path('', include('forms_test.urls')),
+    path('api/v1/', include('api.urls')),
 ]
 
