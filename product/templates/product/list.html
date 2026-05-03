@@ -1,22 +1,41 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    Productos
+{% endblock %}
+
 {% block content %}
 
-<h2>Productos</h2>
+<h1 class="mb-4">
+    Productos Artesanales
+</h1>
 
-<ul>
+<div class="row">
+
 {% for product in products %}
-    <li>
-        {{ product.name }} - ${{ product.price }}
 
-        <!-- ✅ FORMULARIO CORRECTO -->
-        <form method="post" action="{% url 'add_to_cart' product.id %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit">Agregar</button>
-        </form>
+    <div class="col-md-4">
 
-    </li>
+        {% include 'product/product_card.html' with category="Artesanías Mexicanas" %}
+
+    </div>
+
+    {% if forloop.counter|divisibleby:3 %}
+
+        <div class="col-12">
+            <hr>
+        </div>
+
+    {% endif %}
+
+{% empty %}
+
+    <p>
+        No hay productos disponibles
+    </p>
+
 {% endfor %}
-</ul>
+
+</div>
 
 {% endblock %}

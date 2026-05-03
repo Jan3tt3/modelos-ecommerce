@@ -12,7 +12,7 @@ class ProductListView(ListView):
 
 
 # DETALLE de producto
-class ProductDetailView(LoginRequiredMixin, DetailView):
+class ProductDetailView(DetailView):
     model = Product
     template_name = 'product/detail.html'
     context_object_name = 'product'

@@ -1,0 +1,40 @@
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h3>
+            {{ product.name|title }}
+        </h3>
+
+        <p>
+            {{ product.description|truncatewords:12 }}
+        </p>
+
+        <h5>
+            ${{ product.price }}
+        </h5>
+
+        <p>
+            Categoría:
+            {{ categoria|upper }}
+        </p>
+
+        <form
+            method="POST"
+            action="/cart/add/{{ product.id }}/">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                Agregar al carrito
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

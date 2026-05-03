@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = '/products/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
+LOGIN_URL = '/accounts/login/'
+
 # Application definition
 
 INSTALLED_APPS = [
