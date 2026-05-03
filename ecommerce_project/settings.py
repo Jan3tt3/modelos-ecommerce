@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'billing_profile',
     'cart',
     'product',
+    'forms_test',
     
 ]
 
