@@ -1,14 +1,39 @@
 from django.forms.models import model_to_dict
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from billing_profile.models import BillingProfile
+from cart.models import Cart
 from product.models import Product
+from rest_framework import viewsets
+from .serializers import ProductSerializer, OrderSerializer, AddressSerializer, CartSerializer, BillingSerializer
+from order_manager.models import Order
+from address.models import Address
 
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+   
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+class BillingViewSet(viewsets.ModelViewSet):
+    queryset = BillingProfile.objects.all()
+    serializer_class = BillingSerializer
 
 class ProductApiView(APIView):
 
     # CONSULTAR / LISTAR
+    print(" APIView ejecutándose")
     def get(self, request, *args, **kwargs):
 
         product_id = request.GET.get("id", None)
