@@ -8,27 +8,33 @@ from rest_framework import viewsets
 from .serializers import ProductSerializer, OrderSerializer, AddressSerializer, CartSerializer, BillingSerializer
 from order_manager.models import Order
 from address.models import Address
+from .pagination import ProductPagination
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    pagination_class = ProductPagination
    
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    pagination_class = ProductPagination
 
 class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+    pagination_class = ProductPagination
 
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    pagination_class = ProductPagination
 
 class BillingViewSet(viewsets.ModelViewSet):
     queryset = BillingProfile.objects.all()
     serializer_class = BillingSerializer
+    pagination_class = ProductPagination
 
 class ProductApiView(APIView):
 
