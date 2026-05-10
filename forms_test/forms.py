@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 
-
 class UserRegisterForm(forms.ModelForm):
 
     password = forms.CharField(
@@ -15,13 +14,14 @@ class UserRegisterForm(forms.ModelForm):
         fields = [
             'username',
             'email',
-            'password'
+            'password',
         ]
 
         labels ={
             'username': 'Nombre de Usuario',
             'email':'Correo electrónico',
-            'password': 'Contraseña'
+            'password': 'Contraseña',
+            
         }
 
         widgets ={
