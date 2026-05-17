@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product
+from rest_framework.permissions import AllowAny
 
 
 # LISTAR productos
@@ -9,6 +10,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'product/list.html'
     context_object_name = 'products'
+    permission_classes = [AllowAny]
 
 
 # DETALLE de producto
